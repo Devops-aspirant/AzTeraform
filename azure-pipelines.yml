@@ -22,7 +22,7 @@ stages:
              sudo pip3 install checkov
           - script: |
              checkov --version
-      - job: Terraform jobs
+      - job: Terraform_jobs
         steps:
           - script: |
              terraform init
@@ -30,7 +30,7 @@ stages:
               terraform fmt
           - script: |
               terraform plan -out 
-      - job: 'Scan the configurations'
+      - job: Scan_configurations
         steps:
           - script: |
               checkov -d .
