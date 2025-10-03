@@ -1,0 +1,37 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - stage: Build
+    displayName: Terraform Build and scanning stage
+    jobs:
+      - job:
+        displayName: Install Checkov
+        steps:
+          - script: |
+             sudo apt update
+             sudo apt install python3-pip -y
+             sudo pip3 install checkov
+          - script: |
+             checkov --version
+      - job: Terraform jobs
+        steps:
+          - script: |
+             terraform init
+          - script: |
+              terraform fmt
+          - script: |
+              terraform plan -out 
+      - job: 'Scan the configurations'
+        steps:
+          - script: |
+              checkov -d .
+              
